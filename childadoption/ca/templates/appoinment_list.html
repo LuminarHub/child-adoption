@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block appoinment%}
+<div class="container-fluid blog  mb-5" style="min-height: 90vh; padding-top: 5rem; ">
+  {% for msg in messages %}
+  {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>{{msg}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% else %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{msg}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+  {% endfor %}
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5" style="max-width: 800px;">
+            <h5 class="text-uppercase text-primary">Your Appoinments</h5>
+            
+        </div>
+      
+        {% if appointments.exists %}
+        <ul>
+          {% for appointment in appointments %}
+            {% comment %} <li>{{ appointment.date }} at {{ appointment.time }} with {{ appointment.child.name }}</li> {% endcomment %}
+
+            <div style="width: 100%;  background-color: azure;" class="p-2 d-flex mb-3 border" >
+                <div style="width: 100%;">
+                    <h6>Date : <span class="fw-bold">{{appointment.date}}</span> Time : {{appointment.time}}</h6>
+                    <p>Child Name : <span class="fw-bold">{{ appointment.child.name }}</span></p>
+                    <p>Organization : <span class="fw-bold">{{ appointment.child.organization.name }}</span></p>
+                
+                    
+                </div>
+                <div style="">
+                   
+                    <span
+                        style=""
+                        class="p-2 text-dark fw-bold">
+                        <a href="{% url 'ap_us_del' appointment.id %}" data-toggle="tooltip" title="delete">
+                            <i class="fa-solid fa-trash text-danger fs-4"></i>
+                        </a>
+</span>
+                </div>
+            </div>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>You have no appointments scheduled.</p>
+      {% endif %}
+            
+      
+    </div>
+</div>
+<!-- Blog End -->
+ <!-- Button trigger modal -->
+
+  
+ 
+{%endblock appoinment%}

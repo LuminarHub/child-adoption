@@ -1,0 +1,88 @@
+{% extends 'organization_panel.html' %}
+{%load static%}
+{%block home%}
+<div class="container">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% comment %} <a type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Create  SponserShip Applicant
+    </a> {% endcomment %}
+    
+    <div class="row g-4">
+        {% for ch in lifetime_sponserships %}
+        <div class="col-lg-6 col-xl-3">
+            <div class="blog-item">
+                <div class="blog-img">
+                    <div class="blog-info">
+                        <!-- <span><i class="fa fa-clock"></i> Dec 01.2024</span> -->
+                        <!-- <div class="d-flex">
+                            <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
+                            <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
+                        </div> -->
+                    </div>
+                
+                </div>
+                <div class="text-dark border p-4 ">
+                    <h4 class="mb-4"><span class="fw-bold">Name:</span> {{ch.sponser.fname}} {{ch.sponser.lname}}</h4>
+                    <p class="mb-4"><span class="fw-bold">Age:</span> {{ch.sponser.phone_number}}</p>
+                    <p class="mb-4"><span class="fw-bold">From Date:</span> {{ch.date_from}}</p>
+                    <p class="mb-4"><span class="fw-bold">To Date:</span> {{ch.date_to}}</p>
+                    <!-- <p class="mb-4">{{ch.blood_group}}</p> -->
+                    <!-- <a href="{% url 'ap_c' pk=ch.id %}"  class="btn-hover-bg btn btn-primary text-white py-2 px-4"  >
+                        Get Appoinment
+                    </a> -->
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{ ad.id }}">
+                        Request For a Payment 
+                      </button>
+                    {% comment %} <a class="btn-hover-bg btn btn-primary text-white py-2 px-4 my-1" href="{% url 'sponser_category' ch.id %}">Category-wise Sponsorship</a> {% endcomment %}
+
+
+                           <!-- Modal -->
+             <div class="modal fade" id="exampleModal{{ ad.id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ ad.id }}"
+             aria-hidden="true">
+             <div class="modal-dialog">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLabel{{ ad.id }}">Payment Request Form</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                 </div>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        
+    </div>
+</div>
+
+
+
+
+
+{%endblock%}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sety %}
+<div class="container">
+    <div class="row" style="min-height:90vh;padding-top:10rem;">
+
+        <div class="col-12">
+            <h1 class="text-center">Child List</h1>
+            {% for msg in messages %}
+            {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{msg}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% else %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{msg}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="row g-4">
+                {% for ch in life_time_sp %}
+                <a href="{% url 'ch_n' ch.id %}">
+                <div class="col-lg-6 col-xl-3 border border-3" style="border-radius: 10px;">
+                    <div class="blog-item">
+                        <div class="blog-img">
+                            <div class="blog-info">
+                                <!-- <span><i class="fa fa-clock"></i> Dec 01.2024</span> -->
+                                <!-- <div class="d-flex">
+                            <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
+                            <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
+                        </div> -->
+                            </div>
+
+                        </div>
+                        <div class="text-dark border p-4 ">
+                            <h4 class="mb-4"><span class="fw-bold">Name:</span> {{ch.child.name}}</h4>
+                            <p class="mb-4"><span class="fw-bold">Age:</span> {{ch.child.age}}</p>
+                            <p class="mb-4"><span class="fw-bold">Gender:</span> {{ch.child.gender}}</p>
+                            <p class="mb-4"><span class="fw-bold">Born:</span> {{ch.child.since}} {{ch.child.id}}</p>
+                
+
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock sety %}

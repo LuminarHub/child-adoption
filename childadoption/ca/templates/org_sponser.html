@@ -1,0 +1,127 @@
+{% extends 'organization_panel.html' %}
+{%load static%}
+{%block home%}
+<div class="container">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <a type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Create  SponserShip Applicant
+    </a>
+    <div class="row">
+
+        <div class="col-12">
+            <h3 class="text-center">SponserShip Applicant list</h3>
+            <table class="table table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">SponserShip Type</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Born</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in child_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td class="fw-bold">{{ c.child.name }}</td>
+                        <td>{{ c.child.age }}</td>
+                        <td>
+                          {{c.sponsor_category}}
+                        </td>
+                        <td>₹{{ c.amount }}</td>
+                        <td>{{ c.child.gender }}</td>
+                        <td>{{ c.child.since }}</td>
+                        <td>{% if c.is_paid %}
+                            <p class="text-success">Paid</p>
+                            {% else%}
+                            <p class="text-danger">Pending</p>
+                            {%endif%}
+                        </td>
+                        <td>
+
+
+                            
+                   
+                            <a href="{% url 'del_sp' c.id %}" data-toggle="tooltip" title="delete">
+                                <i class="fa-solid fa-trash text-danger fs-4"></i></a>
+
+                               
+                            {% comment %} </a>
+                            <a href="{% url '' c.id %}" data-toggle="tooltip" class="mx-2" title="select child to sponser list">
+                            <i class="fa-solid fa-hand-dots fs-4 "></i>
+                        </a> {% endcomment %}
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create  SponserShip Applicant </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+            
+                    <!-- Child Select Field -->
+                    <select required class="form-select my-2" name="child" aria-label="Default select example">
+                        <option selected>Select Child</option>
+                        {% for o in og_childs %}
+                        <option value="{{ o.id }}">{{ o.name }}</option>
+                        {% endfor %}
+                    </select>
+            
+                    <!-- Sponsor Category Select Field -->
+                    <select required class="form-select my-2" name="sponsor_category" aria-label="Default select example">
+                        <option selected>Select Sponsor Category</option>
+                        <option value="medical">Medical</option>
+                        <option value="clothings">Clothings</option>
+                        <option value="education">Education</option>
+                        <option value="sports">Sports</option>
+                        <option value="food_and_nutrition">Food and Nutrition</option>
+                    </select>
+                    <label for="">Amount</label>
+                <input class="form-control" type="number" name="amount" placeholder="Enter Amount">
+            
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create Sponsorship Applicant</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block donate %}
+<div class="container">
+  <div class="row" style="height:90vh;padding-top:10rem;">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="col-12">
+      <h1 class="text-center">When we give cheerfully and accept gratefully, everyone is blessed</h1>
+      <h4 class="text-center my-5">Choose your Donation Category</h4>
+      {% if messages %}
+      <div class="alert alert-danger">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <form method="POST" action="" enctype="multipart/form-data" class="bg-secondary p-5 border-2 border-info">
+        {% csrf_token %}
+        <div class="form-group">
+          <select name="category" class="form-select" aria-label="Default select example">
+            <option selected>Select your Category</option>
+            <option value="medical">Medical</option>
+            <option value="clothings">Clothings</option>
+            <option value="education">Education</option>
+            <option value="sports">Sports</option>
+            <option value="food_and_nutrition">Food and Nutrition</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input placeholder="Enter Amount" class="my-3 form-control" type="number" name="amount" required>
+        </div>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock donate %}

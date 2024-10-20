@@ -1,0 +1,91 @@
+
+
+
+{% extends 'base.html' %}
+{%load static%}
+
+{% block content %}
+
+<div class="container " style="min-height: 90vh;">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6" style="padding-top: 10rem;">
+      <h1 class="text-center">Registration</h1>
+      {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+      <div class="content">
+        <form action="" method="post">
+          {%csrf_token%}
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">First Name</span>
+              <input type="text" class="form-control" placeholder="Enter your first name" id="fname" name="fname" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Last Name</span>
+              <input type="text" class="form-control" placeholder="Enter your last name" id="lname" name="lname" required>
+            </div>
+  
+            <div class="input-box">
+              <span class="details">Email</span>
+              <input type="text" class="form-control" placeholder="Enter your Email" id="emailaddress" name="emailaddress" required>
+            </div>
+  
+  
+            <div class="input-box">
+              <span class="details">Phone No</span>
+              <input type="text" class="form-control" placeholder="Enter your phone no" id="phone_number" name="phone_number" required>
+            </div>
+  
+  
+            <div class="input-box">
+              <span class="details">Location</span>
+              <input type="text" class="form-control" placeholder="Enter your loaction" id="location" name="location" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Address</span>
+              <textarea class="form-control"  placeholder="Enter your address" id="addresss" name="addresss" required></textarea>
+            </div>
+  
+            <div class="input-box">
+              <span class="details">Username</span>
+              <input type="text" class="form-control" placeholder="Enter your address" id="username" name="username" required>
+            </div>
+  
+            <div class="input-box">
+              <span class="details">Password</span>
+              <input type="password" class="form-control" placeholder="Enter your password" id="password1" name="password1" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Confirm Password</span>
+              <input type="password" class="form-control"  placeholder="Confirm your password" id="password2" name="password2" required>
+            </div>
+          </div>
+          <div class="gender-details" >
+            <div class="input-box form-control">
+              <span class="details form-control">gender:{{form.gender}}</span>
+              
+            </div>
+          </div>
+          <div class="button">
+            <input class="btn btn-success my-2" type="submit" value="Register">
+            <a href="{%url 'social:begin' 'google-oauth2'%}"><img class="display-flex-center zmdi" src="url()" style="height: 30px; width: 30px;" alt=""></a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-3"></div>
+  </div>
+</div>
+{% endblock content %}

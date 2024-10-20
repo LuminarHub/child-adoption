@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{%load static%}
+
+{% block service %}
+ <!-- Donation Start -->
+ <div class="container-fluid donation py-5" style="min-height: 51rem;">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+  <div class="container py-5">
+    
+      <div class="text-center mx-auto pb-5" style="max-width: 800px;">
+        <div style="height: 25px;"></div>
+          <h5 class="text-uppercase text-primary">Services</h5>
+          <h1 class="mb-0">What We Do</h1>
+      </div>
+      
+      <div class="row g-4">
+          <div class="col-lg-4">
+              <div class="donation-item">
+                  <img src="{% static 'images1/donations.jpg'%}" class="img-fluid w-100 " style="min-height: 20rem;" alt="Image">
+                  <div class="donation-content d-flex flex-column">
+                      <h5 class="text-uppercase text-primary mb-4">DONATE</h5>
+                      <p class="text-white mb-4">“I must be willing to give whatever it takes to do good to others. This requires that I be willing to give until it hurts.” </p>
+                      <div class="donation-btn d-flex align-items-center justify-content-start">
+                          <a class="btn-hover-bg btn btn-primary text-white py-2 px-4" href="{% url 'donate' org_id %}">Start..</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4">
+              <div class="donation-item">
+                  <img src="{% static 'images1/adoption.jpg' %}" class="img-fluid w-100" style="min-height: 20rem;" alt="Image">
+                  <div class="donation-content d-flex flex-column">
+                      <h5 class="text-uppercase text-primary mb-4">ADOPTION</h5>
+                      <p class="text-white mb-4">”We believe that adoption is a faith journey — one that you are called to by the Lord. We believe that whatever God calls you to, He will equip you for.”</p>
+                      <div class="donation-btn d-flex align-items-center justify-content-start">
+                          <a class="btn-hover-bg btn btn-primary text-white py-2 px-4" href="{% url 'adoptionform' org_id %}">Start..</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4">
+              <div class="donation-item">
+                  <img src="{% static 'images1/Compassion-International.jpg' %}" style="min-height: 20rem;" class="img-fluid w-100" alt="Image">
+                  <div class="donation-content d-flex flex-column">
+                      <h5 class="text-uppercase text-primary mb-4">SPONSERHIP</h5>
+
+                      <p class="text-white mb-4"> “For years I procrastinated about what charity to support and if it would make a difference. Sponsoring a child allows you to make a difference and what you get back cannot be measured by what you donate.”</p>
+                      <div class="donation-btn d-flex align-items-center justify-content-start">
+                          <a class="btn-hover-bg btn btn-primary text-white py-2 px-4" href="{% url 'sponsor_child' org_id %}">Start..</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+         
+      </div>
+  </div>
+</div>
+<!-- Donation End -->
+
+{% endblock service%}

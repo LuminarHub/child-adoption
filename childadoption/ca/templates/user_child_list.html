@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block chlist%}
+<div class="container-fluid blog  mb-5" style="min-height: 90vh; padding-top: 5rem; ">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5" style="max-width: 800px;">
+            <h5 class="text-uppercase text-primary">Childs</h5>
+            <h1 class="mb-0">Support a child today, for they are the ones who will shape our tomorrow
+            </h1>
+        </div>
+        {% for msg in messages %}
+        {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{msg}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% else %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{msg}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="row g-4">
+            {% for ch in child_objs %}
+            <div class="col-lg-6 col-xl-3">
+                <div class="blog-item">
+                    <div class="blog-img">
+                        <img src="{{ch.image.url}}" class="img-fluid w-100"  alt=""  style="height: 200px; object-fit: cover;">
+                        <div class="blog-info">
+                            <!-- <span><i class="fa fa-clock"></i> Dec 01.2024</span> -->
+                            <!-- <div class="d-flex">
+                                <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
+                                <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
+                            </div> -->
+                        </div>
+                        <div class="search-icon">
+                            <a href="{{ch.image.url}}" data-lightbox="Blog-1" class="my-auto"><i class="fas fa-search-plus btn-primary text-white p-3"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-dark border p-4 ">
+                        <h4 class="mb-4"><span class="fw-bold">Name:</span> {{ch.name}}</h4>
+                        <p class="mb-4"><span class="fw-bold">Age:</span> {{ch.age}}</p>
+                        <p class="mb-4"><span class="fw-bold">Gender:</span> {{ch.gender}}</p>
+                        <p class="mb-4"><span class="fw-bold">Born:</span> {{ch.since}} {{ch.id}}</p>
+                        <!-- <p class="mb-4">{{ch.blood_group}}</p> -->
+                        <!-- <a href="{% url 'ap_c' pk=ch.id %}"  class="btn-hover-bg btn btn-primary text-white py-2 px-4"  >
+                            Get Appoinment
+                        </a> -->
+                        <a class="btn-hover-bg btn btn-primary text-white py-2 px-4" href="{% url 'ap_c' ch.id %}">Get Appoinment</a>
+                    </div>
+                </div>
+            </div>
+ 
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
+ <!-- Button trigger modal -->
+
+  
+ 
+{%endblock chlist%}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        /* CSS styles for center-aligned box format */
+        .container {
+            width: 80%; /* Adjust the width as needed */
+            margin: 0 auto; /* Center align the container */
+            padding: 20px; /* Add padding for spacing */
+            border: 1px solid #ccc; /* Add border for box format */
+            border-radius: 10px; /* Add rounded corners for box format */
+            background-color: #f9f9f9; /* Add background color for box format */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .adoption-form-container {
+            margin-top: 20px; /* Add margin for spacing between table and form */
+            border: 1px solid #ccc; /* Add border for the form container */
+            border-radius: 10px; /* Add rounded corners for the form container */
+            padding: 20px; /* Add padding for spacing inside the form container */
+        }
+        .form-label {
+            margin-bottom: 5px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        .form-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-submit:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="back-button">&lt; Home</a>
+    <div class="container">
+        <h1>Messages</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Approved</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for message in messages %}
+                    <tr>
+                        <td>{{ message.subject }}</td>
+                        <td>{% if message.isapproved %}Yes{% else %}No{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if approved_messages %}
+            <div class="adoption-form-container">
+                <h2>Adoption Form</h2>
+                <!-- Include your adoption form here -->
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label class="form-label" for="full_name">Full Name:</label>
+                    <input class="form-input" type="text" id="full_name" name="full_name" required><br><br>
+                
+                    <label class="form-label" for="email">Email:</label>
+                    <input class="form-input" type="email" id="email" name="email" required><br><br>
+                
+                    <label class="form-label" for="phone">Phone Number:</label>
+                    <input class="form-input" type="tel" id="phone" name="phone" required><br><br>
+                
+                    <label class="form-label" for="address">Address:</label>
+                    <textarea class="form-textarea" id="address" name="address" required></textarea><br><br>
+                
+                    <label class="form-label" for="age">Age:</label>
+                    <input class="form-input" type="number" id="age" name="age" required><br><br>
+                    
+                    <label class="form-label" for="marital_status">Marital Status:</label>
+                    <select class="form-input" id="marital_status" name="marital_status" required>
+                        <option value="">Select</option>
+                        <option value="single">Single</option>
+                        <option value="married">Married</option>
+                        <option value="divorced">Divorced</option>
+                        <option value="widowed">Widowed</option>
+                    </select><br><br>
+                    
+                    <label class="form-label" for="occupation">Occupation:</label>
+                    <input class="form-input" type="text" id="occupation" name="occupation" required><br><br>
+                    
+                    <label class="form-label" for="income">Annual Income (USD):</label>
+                    <input class="form-input" type="number" id="income" name="income" required><br><br>
+                    
+                    <label class="form-label" for="criminal_history">Criminal History:</label><br>
+                    <input type="radio" id="criminal_history_yes" name="criminal_history" value="yes" required>
+                    <label for="criminal_history_yes">Yes</label><br>
+                    <input type="radio" id="criminal_history_no" name="criminal_history" value="no" required>
+                    <label for="criminal_history_no">No</label><br><br>
+
+                    <label class="form-label" for="id_proof">ID Proof:</label><br>
+                    <input type="file" id="id_proof" name="id_proof" accept=".jpg, .jpeg, .png, .pdf" required><br><br>
+                
+                    <label class="form-label" for="additional_comments">Additional Comments:</label><br>
+                    <textarea class="form-textarea" id="additional_comments" name="additional_comments"></textarea><br><br>
+                
+                    <input class="form-submit" type="submit" value="Submit">
+                </form>
+            </div>
+        {% endif %}
+        
+        <!-- Display rejected child detail requests with feedback -->
+        <ul>
+            {% for request in rejected_request %}
+                <li>
+                    <h3 style="color: red">Child Request Rejected</h3>
+                    <!-- Display child detail request details -->
+                    <p>Full Name: {{ request.full_name }}</p>
+                    <!-- Include other fields as needed -->
+                    
+                    <!-- Display feedback from admin -->
+                    <p>Admin Feedback: {{ request.feedback }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% if approved_request %}
+            <h1>Child Details</h1>
+            <label for="min-age-filter">Min Age:</label>
+            <input type="number" id="min-age-filter" placeholder="Enter min age">
+            <label for="max-age-filter">Max Age:</label>
+            <input type="number" id="max-age-filter" placeholder="Enter max age">
+            <button id="filter-button">Filter</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Since</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="child-details-table">
+                    {% for child in child_details %}
+                        <tr>
+                            <td>{{ child.name }}</td>
+                            <td>{{ child.age }}</td>
+                            <td>{{ child.gender }}</td>
+                            <td>{{ child.since }}</td>
+                            <td>
+                                <form action="{% url 'childconfirm' child.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="child_id" value="{{ child.id }}">
+                                    <button type="submit" class="btn btn-outline-success">Interested</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %} 
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var filterButton = document.getElementById("filter-button");
+            var minAgeFilterInput = document.getElementById("min-age-filter");
+            var maxAgeFilterInput = document.getElementById("max-age-filter");
+            var childDetailsTable = document.getElementById("child-details-table");
+
+            filterButton.addEventListener("click", function() {
+                var minAgeFilterValue = parseInt(minAgeFilterInput.value);
+                var maxAgeFilterValue = parseInt(maxAgeFilterInput.value);
+
+                var rows = childDetailsTable.getElementsByTagName("tr");
+
+                for (var i = 0; i < rows.length; i++) {
+                    var ageCell = rows[i].getElementsByTagName("td")[1];
+                    if (ageCell) {
+                        var age = parseInt(ageCell.innerText);
+                        if ((isNaN(minAgeFilterValue) || age >= minAgeFilterValue) && 
+                            (isNaN(maxAgeFilterValue) || age <= maxAgeFilterValue)) {
+                            rows[i].style.display = "";
+                        } else {
+                            rows[i].style.display = "none";
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

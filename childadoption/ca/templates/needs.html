@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row" style="height:90vh;padding-top:10rem;">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="col-12">
+      <h1 class="text-center">Child Needs </h1>
+
+      <div class="row g-4  mt-5">
+
+            {% for sp in life_sposer_needs %}
+            <div class="row my-3 p-2" style="background-color: rgb(204, 223, 243); border:1px solid gray; border-radius: 5px;">
+                <div class="col-5">
+                    Need : 
+                    <p class="fw-bold">{{sp.sponsor_type}}</p>
+                </div>
+                <div class="col-4">
+                    Amount :
+                    <p class="fw-bold">{{sp.amount}}</p>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-success" style="border: 1px solid gray ; border-radius: 10px;" href="{%  url 'n_p' sp.id %}"> Pay</a>
+                </div>
+            
+            </div>
+            {%endfor%}
+        
+        
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

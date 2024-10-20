@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sety %}
+<div class="container">
+  <div class="row" style="height:90vh;padding-top:10rem;">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="col-12">
+      <h1 class="text-center">Payment Screen</h1>
+
+      <div class="row g-4 mt-5">
+        <div class="col-2">
+            <button class="btn btn-info" id="rzp-button2">Pay with Razorpay</button>
+        </div>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+        var options = {
+            "key": "{{ api_key }}", // Enter the Key ID generated from the Dashboard
+            "amount": "{{ amount }}", // Amount in paise
+            "currency": "INR",
+            "name": "Take Care",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": "{{ order_id }}", // Order ID from Razorpay
+            "handler": function (response) {
+                window.location.href = "{% url 'home' %}?status=success&type=sponsorship&payment_id=" + response.razorpay_payment_id + "&order_id=" + response.razorpay_order_id + "&signature=" + response.razorpay_signature + "&sp_child_id={{ sp_child.id }}";
+            },
+            "prefill": {
+                "name": "test",
+                "email": "test@gmail.com",
+                "contact": "1234567890"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp2 = new Razorpay(options);
+        rzp2.on('payment.failed', function (response) {
+            window.location.href = "{% url 'home' %}?status=failed&type=sponsorship&code=" + response.error.code + "&description=" + response.error.description;
+        });
+        document.getElementById('rzp-button2').onclick = function(e){
+            rzp2.open();
+            e.preventDefault();
+        }
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock sety %}

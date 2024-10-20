@@ -1,0 +1,86 @@
+{% extends 'organization_panel.html' %}
+{%load static%}
+{%block home%}
+<div class="container">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <div class="row">
+
+        <div class="col-12">
+            <h3 class="text-center">Total Childs</h3>
+            <table class="table table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">User</th>
+                        <th scope="col">amount</th>
+                        <th scope="col">category</th>
+                        <th scope="col">status</th>
+                        <th scope="col">order_id</th>
+              
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in dons %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td class="fw-bold">{{ c.personal_details.fname }} {{ c.personal_details.lname }}</td>
+                        <td>{{ c.amount }}</td>
+                        <td>
+                          {{c.category}}
+                        </td>
+
+                        <td>{{ c.status }}</td>
+                        <td>{{ c.order_id }}</td>
+                     
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Child</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add Child</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}

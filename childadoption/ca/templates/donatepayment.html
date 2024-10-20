@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+        @import url('https://fonts.googleapis.com/css?family=Arimo');
+    
+        body {
+            display: flex;
+            justify-content: center;
+            margin-left: 450px;
+            margin-top: 50px;
+            background-image: linear-gradient(45deg, #bdf2ce, #a484eb);
+
+            
+            
+        }
+    
+        .wrapper {
+            margin-top: 5%;
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            font-family: "Arimo";
+            background-image: linear-gradient(45deg, #9ed8b1, #a484eb); /* Using the variable value directly */
+            animation: slideUp 2000ms ease;
+
+            
+        }
+    
+        @keyframes slideUp {
+            0% {
+                -webkit-transform: translateY(100%);
+                transform: translateY(100%);
+                visibility: visible;
+            }
+    
+            100% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+        }
+    
+        .container {
+            width: 65%;
+            padding: 5% 10%;
+        }
+    
+        h1 {
+            align-self: center;
+        }
+    
+        form {
+            width: 100%;
+        }
+    
+        form > * {
+            margin-top: 20px;
+        }
+    
+        input {
+            width: 100%;
+            min-height: 25px;
+            border: 0;
+            font-size: 1rem;
+            letter-spacing: .15rem;
+            font-family: "Arimo";
+            margin-top: 5px;
+            color: #8e2807; /* Using the variable value directly */
+            border-radius: 4px;
+        }
+    
+        label {
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #8e2807; /* Using the variable value directly */
+        }
+    
+        h1 {
+            font-size: 24px;
+            line-height: 10px;
+            color: #493b76; /* Using the variable value directly */
+            letter-spacing: 1px;
+        }
+    
+        h1:nth-of-type(2) {
+            margin-top: 10%;
+        }
+    
+        .name {
+            justify-content: space-between;
+            display: flex;
+            width: 100%;
+        }
+    
+        .name div {
+            width: 45%;
+        }
+    
+        .address-info {
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        .address-info div {
+            width: 30%;
+        }
+    
+        .cc-info {
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        .cc-info div {
+            width: 45%;
+        }
+    
+        .btns {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+    
+        .btns button {
+            margin: 3px 0;
+            height: 30px;
+            width: 40%;
+            color: #cfc9e1;
+            background-color: #4a3b76;
+            text-transform: uppercase;
+            border: 0;
+            border-radius: .3rem;
+            letter-spacing: 2px;
+        }
+    
+        .btns button:hover {
+            animation-name: btn-hov;
+            animation-duration: 550ms;
+            animation-fill-mode: forwards;
+        }
+    
+        @keyframes btn-hov {
+            100% {
+                background-color: #cfc9e1;
+                color: #4a3b76;
+                transform: scale(1.05)
+            }
+        }
+    
+        input:focus,
+        button:focus {
+            outline: none;
+        }
+    
+        @media (max-width: 736px) {
+            .wrapper {
+                width: 100%;
+            }
+    
+            .container {
+                width: 100%;
+            }
+    
+            .btns {
+                align-items: center;
+            }
+    
+            .btns button {
+                width: 50%;
+            }
+    
+            form h1 {
+                text-align: center;
+            }
+    
+            .name,
+            .address-info,
+            .cc-info {
+                flex-direction: column;
+                width: 100%;
+                justify-content: space-between;
+            }
+    
+            .name div,
+            .address-info div,
+            .cc-info div {
+                align-items: center;
+                flex-direction: column;
+                width: 100%;
+                display: flex;
+            }
+    
+            .street,
+            .cc-num {
+                text-align: center;
+            }
+    
+            input {
+                margin: 5px 0;
+                min-height: 30px;
+            }
+        }
+    </style>
+    
+
+<body>
+    <form action="" method="post">
+        {%csrf_token%}
+        <div class="wrapper">
+            <div class="container">
+                <form action="">
+                    <h1>
+                        <i class="far fa-credit-card"></i> Payment Information
+                    </h1>
+                    <div class="cc-num">
+                        <label for="card-num">Credit Card No.</label>
+                        <input type="text" name="credict_cardno">
+                    </div>
+                    <div class="cc-info">
+                        <div>
+                            <label for="card-num">Exp</label>
+                            <input type="text" name="exp">
+                        </div>
+                        <div>
+                            <label for="card-num">CCV</label>
+                            <input type="text" name="ccv">
+                        </div>
+                    </div>
+
+                    <div class="name">
+                        <div>
+                            <label for="f-name"><b>Amount</b></label>
+                            <input type="text" name="amount" id="amount">
+                        </div>
+                    </div>
+
+
+                    <div class="btns">
+                        <button>Donate</button>
+                        <button type="submit"><a href="{% url 'home' %}">Back to Home</a></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </form>
+
+    
+    
+</body>
+</html>
+
+

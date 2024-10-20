@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row" style="height:90vh;padding-top:10rem;">
+    
+    <div class="col-12">
+      <h1 class="text-center">Child List</h1>
+      {% for msg in messages %}
+      {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>{{msg}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% else %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{msg}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+      {% endfor %}
+      <div class="row g-4">
+        {% for ch in child_list %}
+        <div class="col-lg-6 col-xl-3">
+            <div class="blog-item">
+                <div class="blog-img">
+                    <div class="blog-info">
+                        <!-- <span><i class="fa fa-clock"></i> Dec 01.2024</span> -->
+                        <!-- <div class="d-flex">
+                            <span class="me-3"> 3 <i class="fa fa-heart"></i></span>
+                            <a href="#" class="text-white">0 <i class="fa fa-comment"></i></a>
+                        </div> -->
+                    </div>
+                
+                </div>
+                <div class="text-dark border p-4 ">
+                    <h4 class="mb-4"><span class="fw-bold">Name:</span> {{ch.name}}</h4>
+                    <p class="mb-4"><span class="fw-bold">Age:</span> {{ch.age}}</p>
+                    <p class="mb-4"><span class="fw-bold">Gender:</span> {{ch.gender}}</p>
+                    <p class="mb-4"><span class="fw-bold">Born:</span> {{ch.since}} {{ch.id}}</p>
+                    <!-- <p class="mb-4">{{ch.blood_group}}</p> -->
+                    <!-- <a href="{% url 'ap_c' pk=ch.id %}"  class="btn-hover-bg btn btn-primary text-white py-2 px-4"  >
+                        Get Appoinment
+                    </a> -->
+                    <a class="btn-hover-bg btn btn-primary text-white py-2 px-4 my-1" href="{% url 'life_sp' pk=ch.id %}">Lifetime Sponsorship </a>
+                    <a class="btn-hover-bg btn btn-primary text-white py-2 px-4 my-1" href="{% url 'sponser_category' ch.id %}">Category-wise Sponsorship</a>
+
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

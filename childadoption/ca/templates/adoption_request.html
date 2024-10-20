@@ -1,0 +1,107 @@
+{% extends 'organization_panel.html' %}
+{% load static %}
+{% block home %}
+<h3 class="text-center">Adoption Requests</h3>
+<div class="container">
+  <div class="row">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="bg-white col-12">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">User</th>
+            <th scope="col">Request</th>
+            <th scope="col">Verify</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if adoption_requests %}
+          {% for ad in adoption_requests %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ ad.personal_details.fname }} {{ ad.personal_details.lname }}</td>
+            <td>{{ ad.subject }}</td>
+            <td>
+              {% if ad.status == 'A' %}
+              <i class="fa-solid fa-check text-success"></i>
+              {% elif ad.status == 'R' %}
+              <i class="fa-solid fa-x text-danger"></i>
+              {% elif ad.status == 'P' %}
+              <i class="fa-solid fa-clock text-primary"></i>
+              {% endif %}
+            </td>
+            <th scope="col">
+              <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Status
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="{% url 'vr' pk=ad.id sk='A' %}">Accepted</a></li>
+                  <li><a class="dropdown-item" href="{% url 'vr' pk=ad.id sk='R' %}">Reject</a></li>
+                  <li><a class="dropdown-item" href="{% url 'vr' pk=ad.id sk='P' %}">Pending</a></li>
+                </ul>
+              </div>
+            </th>
+            <td>
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{ ad.id }}">
+                View
+              </button>
+            </td>
+          </tr>
+
+          <!-- Modal -->
+             <!-- Modal -->
+             <div class="modal fade" id="exampleModal{{ ad.id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ ad.id }}"
+             aria-hidden="true">
+             <div class="modal-dialog">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLabel{{ ad.id }}">Request Details</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                   <p><strong>ID:</strong> {{ ad.id }}</p>
+                   <p><strong>Full Name:</strong> {{ ad.full_name }}</p>
+                   <p><strong>Email:</strong> {{ ad.email }}</p>
+                   <p><strong>Phone:</strong> {{ ad.phone }}</p>
+                   <p><strong>Address:</strong> {{ ad.address }}</p>
+                   <p><strong>Age:</strong> {{ ad.age }}</p>
+                   <p><strong>Marital Status:</strong> {{ ad.marital_status }}</p>
+                   <p><strong>Occupation:</strong> {{ ad.occupation }}</p>
+                   <p><strong>Income:</strong> {{ ad.income }}</p>
+                   <p><strong>Criminal History:</strong> {{ ad.criminal_history }}</p>
+                   {% if ad.id_proof%}
+                   <p><strong>ID Proof:</strong> <a href="{{ ad.id_proof.url }}">View Document</a></p>
+                   {%endif%}
+                   <p><strong>Additional Comments:</strong> {{ ad.additional_comments }}</p>
+                   <p><strong>Feedback:</strong> {{ ad.feedback }}</p>
+                 </div>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sety %}
+<div class="container">
+  <div class="row" style="height:90vh;padding-top:10rem;">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="col-12">
+      <h1 class="text-center">LifeTime Sponser Form</h1>
+      <p class="text-danger">Disclosure: If you are sponsoring a child, you cannot sponsor that same child again in the future.</p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class= "btn btn-success" type="submit">Submit</button>
+    </form>
+    
+    </div>
+  </div>
+</div>
+{% endblock sety %}

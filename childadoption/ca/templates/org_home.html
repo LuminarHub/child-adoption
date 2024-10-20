@@ -1,0 +1,36 @@
+{% extends 'organization_panel.html' %}
+{%load static%}
+{%block home%}
+<div class="container">
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="row">
+        <div class="col-3  me-3 p-3 rounded-3" style="background-color: rgb(191, 235, 243);">
+            <h4>
+                Total Childs Count: {{childs}}
+            </h4>
+        </div>
+        <div class="col-4  me-3 p-3 rounded-3" style="background-color: rgb(191, 235, 243);">
+            <h4>
+               Total Donation Amount: ₹ {{total_amt}}
+            </h4>
+        </div>
+        <!-- <div class="col-3  me-3 p-3 rounded-3" style="background-color: rgb(191, 235, 243);">
+            <h4>
+                Total Child: 44
+            </h4>
+        </div> -->
+    </div>
+</div>
+{%endblock%}

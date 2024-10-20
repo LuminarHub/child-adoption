@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block sety %}
+<div class="container " >
+  <div class="row" style="padding-top: 200px;height: 90vh;">
+    <h1>Payment Success</h1>
+    <p>Payment ID: {{ payment_id }}</p>
+    <p>Order ID: {{ order_id }}</p>
+    <p>Signature: {{ signature }}</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block adoption%}
+<div class="container" style="min-height: 51rem; padding-top: 9rem;">
+    <h1 class="text-center">My Adoption Requests</h1>
+    <div class="row">
+        {% for msg in messages %}
+        {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{msg}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% else %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{msg}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <div class="col-12">
+            {% if ad_rq.exists %}
+            <ul>
+                {% for request in ad_rq %}
+               
+
+                <div style="width: 100%;  background-color: azure;" class="p-2 d-flex mb-3 border" >
+                    <div style="width: 100%;">
+                        <h6>Organizathion : <span class="fw-bold">{{request.organization.name}}</span></h6>
+                        <p>Subject : <span class="fw-bold">{{ request.subject }}</span></p>
+                        {% if request.status == 'R'%}
+                            {% if request.feedback %}
+                            <p> <span class="fw-bold text-danger">{{ request.feedback }}</span></p>
+                            {% endif%}
+                        {% endif %}
+                        
+                    </div>
+                    <div style="width: 9rem;display: flex;align-items: center;justify-content: center;">
+                        {% if request.status == 'A'%}
+                        <span
+                            style="background-color: rgba(54, 255, 145, 0.34); border: 1px solid green; border-radius: 10px;"
+                            class="p-2 text-dark fw-bold">Accepted</span>
+                        {%elif request.status == 'R'%}    
+                        <span
+                            style="background-color: rgba(255, 36, 16, 0.53); border: 1px solid rgb(231, 22, 11); border-radius: 10px;"
+                            class="p-2 text-dark fw-bold">Rejected</span>
+                        {% else %}    
+                        <span
+                            style="background-color: rgba(36, 143, 255, 0.45); border: 1px solid rgb(11, 81, 231); border-radius: 10px;"
+                            class="p-2 text-dark fw-bold">Pending</span>
+                        {%endif%}    
+                    </div>
+                </div>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No adoption requests found.</p>
+            {% endif %}
+
+            
+        </div>
+    </div>
+</div>
+{%endblock adoption%}
